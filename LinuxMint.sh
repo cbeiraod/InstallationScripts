@@ -22,6 +22,16 @@ sudo apt upgrade -y
 
 
 ################################################################################
+# Dconf editor
+clear
+echo "-------------------------------------------------------------------------"
+echo "--  Installing the dconf-cli so we can edit options from the command line"
+echo "-------------------------------------------------------------------------"
+sudo apt-get install dconf-cli
+################################################################################
+
+
+################################################################################
 # Install git so we can do source control
 clear
 echo "-------------------------------------------------------------------------"
@@ -54,8 +64,7 @@ clear
 echo "-------------------------------------------------------------------------"
 echo "--  Installing fonts"
 echo "-------------------------------------------------------------------------"
-sudo apt-get install -y msttcorefonts
-sudo apt-get install -y ttf-mscorefonts-extra
+sudo apt-get install -y ttf-mscorefonts-installer
 sudo apt-get install -y lmodern
 # Update for fontspec in latex
 rm ~/.texmf-var/luatex-cache/generic/fonts/otf/*
