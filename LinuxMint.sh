@@ -43,7 +43,7 @@ echo "-------------------------------------------------------------------------"
 sudo apt-get install -y texlive texlive-binaries texlive-fonts-recommended \
   texlive-generic-recommended texlive-latex-base texlive-latex-extra \
   texlive-latex-recommended texlive-pictures texlive-latex-extra \
-  texlive-luatex texlive-xetex
+  texlive-luatex texlive-xetex texlive-fonts-extra
 sudo apt-get install -y kile texmaker
 ################################################################################
 
@@ -54,7 +54,11 @@ clear
 echo "-------------------------------------------------------------------------"
 echo "--  Installing fonts"
 echo "-------------------------------------------------------------------------"
-sudo apt-get install msttcorefonts
+sudo apt-get install -y msttcorefonts
+sudo apt-get install -y ttf-mscorefonts-extra
+sudo apt-get install -y lmodern
+# Update for fontspec in latex
+#luaotfload-tool -vvv --update --force
 ################################################################################
 
 
