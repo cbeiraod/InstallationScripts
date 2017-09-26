@@ -58,7 +58,9 @@ sudo apt-get install -y msttcorefonts
 sudo apt-get install -y ttf-mscorefonts-extra
 sudo apt-get install -y lmodern
 # Update for fontspec in latex
-#luaotfload-tool -vvv --update --force
+rm ~/.texmf-var/luatex-cache/generic/fonts/otf/*
+luaotfload-tool -v --update --force
+sudo texhash
 ################################################################################
 
 
@@ -78,7 +80,7 @@ clear
 echo "-------------------------------------------------------------------------"
 echo "--  Restarting"
 echo "-------------------------------------------------------------------------"
-sleep 60
+sleep 20
 #sudo shutdown -r now
 ################################################################################
 exit 0
