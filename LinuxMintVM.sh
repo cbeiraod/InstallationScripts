@@ -55,6 +55,17 @@ sudo apt-get install -y dconf-cli
 
 
 ################################################################################
+# Install some other useful utilities
+clear
+echo "-------------------------------------------------------------------------"
+echo "--  Installing utilities"
+echo "-------------------------------------------------------------------------"
+  # This one helps us set certificates for firefox via the command line
+sudo apt-get install -y libnss3-tools
+################################################################################
+
+
+################################################################################
 # Install Keepass, for all my password needs
 clear
 echo "-------------------------------------------------------------------------"
@@ -146,7 +157,17 @@ clear
 echo "-------------------------------------------------------------------------"
 echo "--  Running some miscelanous configurations"
 echo "-------------------------------------------------------------------------"
+# Allow the base user to mount virtualbox shared folders
 #sudo adduser cristovao vboxsf
+# Add the CERN certification authorities to firefox, first get them, then install them
+wget https://cafiles.cern.ch/cafiles/certificates/CERN%20Root%20Certification%20Authority%202.crt
+wget https://cafiles.cern.ch/cafiles/certificates/CERN%20Certification%20Authority.crt
+for certDB in $(find  ~/.mozilla* ~/.thunderbird -name "cert8.db")
+do
+  certDir=$(dirname ${certDB});
+  certutil -A -n "CERN Root Certification Authority" -t "CT,c,C" -i "CERN Root Certification Authority 2.crt" -d ${certDir}
+  certutil -A -n "CERN Certification Authority" -t "CT,c,C" -i "CERN Certification Authority.crt" -d ${certDir}
+done
 ################################################################################
 
 
@@ -156,6 +177,7 @@ clear
 echo "-------------------------------------------------------------------------"
 echo "--  Cleaning up"
 echo "-------------------------------------------------------------------------"
+sudo apt-get autoremove
 sudo apt-get clean
 ################################################################################
 
