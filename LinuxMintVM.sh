@@ -60,7 +60,7 @@ clear
 echo "-------------------------------------------------------------------------"
 echo "--  Installing utilities"
 echo "-------------------------------------------------------------------------"
-  # This one helps us set certificates for firefox via the command line
+  #   This one helps us set certificates for firefox via the command line
 sudo apt-get install -y libnss3-tools
 ################################################################################
 
@@ -147,6 +147,10 @@ if [ installJava -eq 1 ] ; then
   # At least it is not supported by firefox since version 52 or so
   #mkdir -p ~/.mozzila/plugins
   #ln -s /usr/lib/jvm/java-9-oracle/lib/libnpjp2.so ~/.mozzila/plugins/
+
+  #   This one is a build tool used for the HLT ConfDB (ie: right now I am using
+  # it for developing the CT-PPS HLT)
+  sudo apt-get install -y ant
 fi
 ################################################################################
 
