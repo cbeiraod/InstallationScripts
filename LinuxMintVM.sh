@@ -47,6 +47,11 @@ git config --global user.name "Cristóvão B. da Cruz e Silva"
 ################################################################################
 # Install latex
 clear
+unset answer
+read -t 4 -er -n 1 -p "Do you wish to install latex? [Y/n] " answer
+[ $? -ne 0 ] && echo "" # Add a new line when it times out
+[ -z "$answer" ] && answer="Y" # Yes is the default answer
+if echo "$answer" | grep -iq "^y" ;then
 echo "-------------------------------------------------------------------------"
 echo "--  Installing Latex"
 echo "-------------------------------------------------------------------------"
@@ -55,6 +60,9 @@ sudo apt-get install -y texlive texlive-binaries texlive-fonts-recommended \
   texlive-latex-recommended texlive-pictures texlive-latex-extra \
   texlive-luatex texlive-xetex texlive-fonts-extra
 sudo apt-get install -y kile texmaker
+else
+  echo "Skipping latex installation"
+fi
 ################################################################################
 
 
