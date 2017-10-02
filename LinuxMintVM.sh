@@ -124,8 +124,18 @@ fi
 ################################################################################
 # Install java
 if [ installJava -eq 1 ] ; then
+  clear
+  echo "-------------------------------------------------------------------------"
+  echo "--  Installing the oracle Java plugin"
+  echo "-------------------------------------------------------------------------"
+  apt-get remove openjdk*
   sudo apt-get install -y oracle-java9-installer
   sudo apt-get install -y oracle-java9-set-default
+
+  # The following lines seem to not be needed anymore with java 9...
+  # At least it is not supported by firefox since version 52 or so
+  #mkdir -p ~/.mozzila/plugins
+  #ln -s /usr/lib/jvm/java-9-oracle/lib/libnpjp2.so ~/.mozzila/plugins/
 fi
 ################################################################################
 
