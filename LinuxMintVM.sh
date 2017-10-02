@@ -168,8 +168,10 @@ do
   certutil -A -n "CERN Root Certification Authority" -t "CT,c,C" -i "CERN Root Certification Authority 2.crt" -d ${certDir}
   certutil -A -n "CERN Certification Authority" -t "CT,c,C" -i "CERN Certification Authority.crt" -d ${certDir}
 done
-sudo keytool -import -trustcacerts -keystore /usr/lib/jvm/java-9-oracle/lib/security/cacerts -storepass changeit -noprompt -alias "CERN Root Certification Authority" -file "CERN Root Certification Authority 2.crt"
-sudo keytool -import -trustcacerts -keystore /usr/lib/jvm/java-9-oracle/lib/security/cacerts -storepass changeit -noprompt -alias "CERN Certification Authority" -file "CERN Certification Authority.crt"
+if [ installJava -eq 1 ] ; then
+  sudo keytool -import -trustcacerts -keystore /usr/lib/jvm/java-9-oracle/lib/security/cacerts -storepass changeit -noprompt -alias "CERN Root Certification Authority" -file "CERN Root Certification Authority 2.crt"
+  sudo keytool -import -trustcacerts -keystore /usr/lib/jvm/java-9-oracle/lib/security/cacerts -storepass changeit -noprompt -alias "CERN Certification Authority" -file "CERN Certification Authority.crt"
+fi
 ################################################################################
 
 
