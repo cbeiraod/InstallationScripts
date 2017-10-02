@@ -10,6 +10,29 @@
 
 
 ################################################################################
+# Ask about some general installation options
+clear
+unset answer
+read -t 4 -er -n 1 -p "Do you wish to install java? [Y/n] " answer
+[ $? -ne 0 ] && echo "" # Add a new line when it times out
+[ -z "$answer" ] && answer="N" # No is the default answer
+if echo "$answer" | grep -iq "^y" ;then
+  installJava=1
+else
+  installJava=
+fi
+################################################################################
+
+
+################################################################################
+# Add additional repositories for desired packages
+if [ installJava -eq 1 ] ; then
+  sudo add-apt-repository ppa:webupd8team/java
+fi
+################################################################################
+
+
+################################################################################
 # Update the repositories and then upgrade the locally installed software
 # The -y skips confirmation by assuming a positive answer
 clear
@@ -22,7 +45,7 @@ sudo apt upgrade -y
 
 
 ################################################################################
-# Dconf editor
+# Install command line Dconf editor
 clear
 echo "-------------------------------------------------------------------------"
 echo "--  Installing the dconf-cli so we can edit options from the command line"
@@ -32,7 +55,7 @@ sudo apt-get install -y dconf-cli
 
 
 ################################################################################
-# Keepass, for all my password needs
+# Install Keepass, for all my password needs
 clear
 echo "-------------------------------------------------------------------------"
 echo "--  Installing keepassx"
@@ -94,6 +117,15 @@ if [ latexInstalled -eq 1 ] ; then
   rm ~/.texmf-var/luatex-cache/generic/fonts/otf/*
   luaotfload-tool -v --update --force
   sudo texhash
+fi
+################################################################################
+
+
+################################################################################
+# Install java
+if [ installJava -eq 1 ] ; then
+  sudo apt-get install -y oracle-java9-installer
+  sudo apt-get install -y oracle-java9-set-default
 fi
 ################################################################################
 
