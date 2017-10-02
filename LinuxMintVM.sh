@@ -26,6 +26,10 @@ fi
 
 ################################################################################
 # Add additional repositories for desired packages
+clear
+echo "-------------------------------------------------------------------------"
+echo "--  Adding the needed additional repositories"
+echo "-------------------------------------------------------------------------"
 if [ installJava -eq 1 ] ; then
   sudo add-apt-repository ppa:webupd8team/java
 fi
