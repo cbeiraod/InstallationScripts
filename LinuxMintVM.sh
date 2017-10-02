@@ -47,6 +47,7 @@ git config --global user.name "Cristóvão B. da Cruz e Silva"
 ################################################################################
 # Install latex
 clear
+unset latexInstalled
 unset answer
 read -t 4 -er -n 1 -p "Do you wish to install latex? [Y/n] " answer
 [ $? -ne 0 ] && echo "" # Add a new line when it times out
@@ -60,8 +61,10 @@ if echo "$answer" | grep -iq "^y" ;then
     texlive-latex-recommended texlive-pictures texlive-latex-extra \
     texlive-luatex texlive-xetex texlive-fonts-extra
   sudo apt-get install -y kile texmaker
+  latexInstalled=1
 else
   echo "Skipping latex installation"
+  latexInstalled=
 fi
 ################################################################################
 
@@ -72,12 +75,16 @@ clear
 echo "-------------------------------------------------------------------------"
 echo "--  Installing fonts"
 echo "-------------------------------------------------------------------------"
-sudo apt-get install -y ttf-mscorefonts-installer
-sudo apt-get install -y lmodern
-# Update for fontspec in latex
-rm ~/.texmf-var/luatex-cache/generic/fonts/otf/*
-luaotfload-tool -v --update --force
-sudo texhash
+if [ latexInstalled -eq 1 ] ; then
+  #   For now, these fonts are only used in my latex scripts, so no need to
+  # install them without latex
+  sudo apt-get install -y ttf-mscorefonts-installer
+  sudo apt-get install -y lmodern
+  # Update for fontspec in latex
+  rm ~/.texmf-var/luatex-cache/generic/fonts/otf/*
+  luaotfload-tool -v --update --force
+  sudo texhash
+fi
 ################################################################################
 
 
