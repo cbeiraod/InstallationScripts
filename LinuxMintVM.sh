@@ -73,9 +73,20 @@ sudo apt-get install -y libnss3-tools
 # Install Keepass, for all my password needs
 clear
 echo "-------------------------------------------------------------------------"
-echo "--  Installing keepassx"
+echo "--  Installing keepass"
 echo "-------------------------------------------------------------------------"
 sudo apt-get install -y keepassx
+################################################################################
+
+
+################################################################################
+# Install Sublime test, we all need a fun text editor (under some
+# definition of fun)
+clear
+echo "-------------------------------------------------------------------------"
+echo "--  Installing Sublime Text"
+echo "-------------------------------------------------------------------------"
+sudo apt-get install -y sublime-text
 ################################################################################
 
 
