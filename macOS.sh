@@ -61,7 +61,7 @@ if [ enableTRIM -eq 1 ] ; then
 fi
 
 if [ useTimeMachine -eq 1 ] ; then
-  read -n 1 -s -p "Will be using time machine. Please insert the drive to be used as the time machine backup, then hit enter to continue"
+  read -n 1 -s -p "Will be using time machine. Please insert the drive to be used as the time machine backup, then press any key to continue"
   sudo tmutil enable
   if [ onSSD -eq 1 ] ; then
     sudo tmutil disablelocal
@@ -113,43 +113,40 @@ sudo defaults write /.Spotlight-V100/VolumeConfiguration.plist Exclusions -array
 sudo launchctl stop com.apple.metadata.mds
 sudo launchctl start com.apple.metadata.mds
 echo ""
+
+echo "Other configs"
+# Show battery percentage in top bar, then restart the UI
+defaults write com.apple.menuextra.battery ShowPercent YES
+killall SystemUIServer
+echo ""
 ################################################################################
 
 
 
 
 ################################################################################
-# Update the repositories and then upgrade the locally installed software
-# The -y skips confirmation by assuming a positive answer
+# Install homebrew, my preferred package manager for mac
 clear
 echo "-------------------------------------------------------------------------"
-echo "--  Updating repositories and system"
+echo "--  Installing homebrew"
 echo "-------------------------------------------------------------------------"
-sudo apt update -y
-sudo apt upgrade -y
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ################################################################################
 
 
 ################################################################################
-# Dconf editor
+# Install source control software
 clear
 echo "-------------------------------------------------------------------------"
-echo "--  Installing the dconf-cli so we can edit options from the command line"
+echo "--  Installing and configuring source control software (git & hg)"
 echo "-------------------------------------------------------------------------"
-sudo apt-get install dconf-cli
-################################################################################
-
-
-################################################################################
-# Install git so we can do source control
-clear
-echo "-------------------------------------------------------------------------"
-echo "--  Installing and configuring git"
-echo "-------------------------------------------------------------------------"
-sudo apt-get install -y git
+brew install git
+brew install hg
 # Git configuration below
 git config --global user.email "CrisXed@gmail.com"
 git config --global user.name "Cristóvão B. da Cruz e Silva"
+# hg configuration below
+
 ################################################################################
 
 
@@ -198,7 +195,6 @@ clear
 echo "-------------------------------------------------------------------------"
 echo "--  Cleaning up"
 echo "-------------------------------------------------------------------------"
-sudo apt-get clean
 ################################################################################
 
 
