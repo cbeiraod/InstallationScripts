@@ -119,6 +119,7 @@ echo "Other configs"
 defaults write com.apple.menuextra.battery ShowPercent YES
 killall SystemUIServer
 
+## Finder
 # Show stuff on desktop
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop 1
 defaults write com.apple.finder ShowHardDrivesOnDesktop 1
