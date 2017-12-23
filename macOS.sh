@@ -118,6 +118,20 @@ echo "Other configs"
 # Show battery percentage in top bar, then restart the UI
 defaults write com.apple.menuextra.battery ShowPercent YES
 killall SystemUIServer
+
+# Show stuff on desktop
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop 1
+defaults write com.apple.finder ShowHardDrivesOnDesktop 1
+defaults write com.apple.finder ShowMountedServersOnDesktop 1
+defaults write com.apple.finder ShowRemovableMediaOnDesktop 1
+# Sidebar
+defaults write com.apple.finder ShowSidebar 1
+# Make the computer visible in the sidebar favorites
+/usr/libexec/PlistBuddy -c "set systemitems:VolumesList:0:Visibility AlwaysVisible" ~/Library/Preferences/com.apple.sidebarlists.plist
+/usr/libexec/PlistBuddy -c "delete systemitems:VolumesList:0:Flags" ~/Library/Preferences/com.apple.sidebarlists.plist
+#
+defaults write com.apple.finder ShowPreviewPane 0
+defaults write com.apple.finder ShowTabView 0
 echo ""
 ################################################################################
 
