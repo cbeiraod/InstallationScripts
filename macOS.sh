@@ -126,12 +126,12 @@ defaults write com.apple.finder ShowMountedServersOnDesktop 1
 defaults write com.apple.finder ShowRemovableMediaOnDesktop 1
 # Sidebar
 defaults write com.apple.finder ShowSidebar 1
-# Make the computer visible in the sidebar favorites
+# Make the computer visible in the sidebar favorites (do not forget to add the home to the favorites by hand)
 /usr/libexec/PlistBuddy -c "set systemitems:VolumesList:0:Visibility AlwaysVisible" ~/Library/Preferences/com.apple.sidebarlists.plist
 /usr/libexec/PlistBuddy -c "delete systemitems:VolumesList:0:Flags" ~/Library/Preferences/com.apple.sidebarlists.plist
-#
-defaults write com.apple.finder ShowPreviewPane 0
-defaults write com.apple.finder ShowTabView 0
+# Show all extensions
+defaults write com.apple.finder AppleShowAllExtensions 1
+killall Finder
 echo ""
 ################################################################################
 
