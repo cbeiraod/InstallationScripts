@@ -119,20 +119,84 @@ echo "Other configs"
 defaults write com.apple.menuextra.battery ShowPercent YES
 killall SystemUIServer
 
-## Finder
+## Finder Preferences
 # Show stuff on desktop
-defaults write com.apple.finder ShowExternalHardDrivesOnDesktop 1
-defaults write com.apple.finder ShowHardDrivesOnDesktop 1
-defaults write com.apple.finder ShowMountedServersOnDesktop 1
-defaults write com.apple.finder ShowRemovableMediaOnDesktop 1
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
+defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 # Sidebar
 defaults write com.apple.finder ShowSidebar 1
 # Make the computer visible in the sidebar favorites (do not forget to add the home to the favorites by hand)
 /usr/libexec/PlistBuddy -c "set systemitems:VolumesList:0:Visibility AlwaysVisible" ~/Library/Preferences/com.apple.sidebarlists.plist
 /usr/libexec/PlistBuddy -c "delete systemitems:VolumesList:0:Flags" ~/Library/Preferences/com.apple.sidebarlists.plist
 # Show all extensions
-defaults write com.apple.finder AppleShowAllExtensions 1
+defaults write com.apple.finder AppleShowAllExtensions -bool true
+# Finder: allow text selection in Quick Look (this does not seem to work anymore)
+defaults write com.apple.finder QLEnableTextSelection -bool true
 killall Finder
+
+## System Preferences
+# Use dark theme
+osascript <<END
+tell application "System Events"
+  tell appearance preferences
+    set dark mode to true
+  end tell
+end tell
+END
+# Do not close windows when quitting an app (this means that the state is kept)
+defaults write -g NSQuitAlwaysKeepsWindows -int 1
+# Set Dock size and magnification
+defaults write com.apple.dock tilesize -int 32
+defaults write com.apple.dock magnification -int 1
+defaults write com.apple.dock largesize -int 84
+killall Dock
+# Don’t automatically rearrange Spaces based on most recent use
+defaults write com.apple.dock mru-spaces -bool false
+# Group windows by application
+defaults write com.apple.dock expose-group-apps -bool true
+# Make screens not share spaces
+defaults write com.apple.spaces spans-displays -bool false
+# Setting hot corners
+#   Desktop
+defaults write com.apple.dock wvous-bl-corner -int 4
+#   Application windows
+defaults write com.apple.dock wvous-tl-corner -int 3
+#   Mission control
+defaults write com.apple.dock wvous-tr-corner -int 2
+#   Launch Pad
+defaults write com.apple.dock wvous-br-corner -int 11
+defaults write com.apple.dock wvous-bl-modifier -int 0
+defaults write com.apple.dock wvous-tl-modifier -int 0
+defaults write com.apple.dock wvous-tr-modifier -int 0
+defaults write com.apple.dock wvous-br-modifier -int 0
+# Show icon when location services are accessed:
+sudo defaults write /Library/Preferences/com.apple.locationmenu ShowSystemServices 1
+# Disable autocorrect
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+# Disable automatic capitalization
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+
+#(some resources: https://gist.github.com/benfrain/7434600)
+# Avoid creating .DS_Store files on network volumes
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+# Set up Safari for development.
+defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+defaults write com.apple.Safari "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" -bool true
+defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+# Use column view in all Finder windows by default
+# Four-letter codes for the other view modes: `Nlsv`, `icnv`, `clmv`, `Flwv`
+defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
+# Disable the “Are you sure you want to open this application?” dialog
+defaults write com.apple.LaunchServices LSQuarantine -bool false
+# Safari to not open automatically
+defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
+# Unhide/hide folders
+#chflags nohidden ~/Library/
+#chflags hidden ~/Documents/Secrets
 echo ""
 ################################################################################
 
@@ -160,8 +224,13 @@ brew install hg
 # Git configuration below
 git config --global user.email "CrisXed@gmail.com"
 git config --global user.name "Cristóvão B. da Cruz e Silva"
+git config --global core.editor nano
 # hg configuration below
-
+cat << EOT > ~/.hgrc
+[ui]
+username = Cristóvão B. da Cruz e Silva <CrisXed@gmail.com>
+editor = nano
+EOT
 ################################################################################
 
 
@@ -210,6 +279,21 @@ clear
 echo "-------------------------------------------------------------------------"
 echo "--  Cleaning up"
 echo "-------------------------------------------------------------------------"
+################################################################################
+
+
+################################################################################
+# Info
+clear
+echo "-------------------------------------------------------------------------"
+echo "--  Information"
+echo "-------------------------------------------------------------------------"
+echo ""
+echo "Do not forget to go into System Preferences and, under Language & Region,"
+echo "add Portuguese and Japanese as a language, with English as the primary."
+echo "Add Japanese as an input source under Keyboard > Input Sources"
+echo ""
+read -n 1 -s -p "Press any key to continue (will restart the machine)"
 ################################################################################
 
 
