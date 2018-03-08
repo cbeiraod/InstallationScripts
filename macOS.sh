@@ -138,9 +138,9 @@ EOT
 fi
 
 echo "Removing some directories from spotlight"
-sudo defaults write /.Spotlight-V100/VolumeConfiguration.plist Exclusions -array-add "/Library/Caches"
-sudo defaults write /.Spotlight-V100/VolumeConfiguration.plist Exclusions -array-add "~/Library/Caches"
-sudo defaults write /.Spotlight-V100/VolumeConfiguration.plist Exclusions -array-add "~/Downloads"
+SUDO=sudo defaults_add_to_array /.Spotlight-V100/VolumeConfiguration.plist Exclusions "/Library/Caches"
+SUDO=sudo defaults_add_to_array /.Spotlight-V100/VolumeConfiguration.plist Exclusions "~/Library/Caches"
+SUDO=sudo defaults_add_to_array /.Spotlight-V100/VolumeConfiguration.plist Exclusions "~/Downloads"
 sudo launchctl stop com.apple.metadata.mds
 sudo launchctl start com.apple.metadata.mds
 echo ""
