@@ -6,6 +6,37 @@
 #   macOS, according to my preferences.
 ################################################################################
 
+## Functions
+function containsElement () {
+  local e match="$1"
+  shift
+  for e; do [[ "$e" == "$match" ]] && return 0; done
+  return 1
+}
+
+SUDO=
+function defaults_add_to_array () {
+  local domain=$1
+  local key=$2
+  local value=$3
+
+  #echo "Trying to add to domain $domain (key:value):"
+  #echo "  - $key:$value"
+
+  local currentList=$($SUDO defaults read "$domain" "$key" | sed '1d;$d' | tr '\n' ' ' | tr -d " ")
+  local array
+  IFS=',' read -r -a array <<< "$currentList"
+
+  local valueCheck='"'$(echo $value | tr -d " ")'"'
+
+  if containsElement "$valueCheck" "${array[@]}" ; then
+    #echo "It is inside"
+  else
+    #echo "It is not inside"
+    $SUDO defaults write "$domain" "$key" -array-add "$value"
+  fi
+}
+
 
 
 
